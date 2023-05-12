@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  api:
+    # image: riya-shah/nestjs-dockerized
+    build:
+      dockerfile: dockerfile
+      context: .
+    depends_on:
+      - postgres
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_HOST: postgres
+      DATABASE_NAME: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: riyaa@2967
+      JWT_KEY: mysecretkey
+      JWT_EXPIRE: 3600
+    ports:
+      - '8099:3000'
+    volumes:
+      - data:/usr/src/app/data
+
+  postgres:
+    image: postgres:10.4
+    ports:
+      - '35000:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: riyaa@2967
+      POSTGRES_DB: postgres
+volumes:
+  data:
